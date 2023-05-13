@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const { MongoClient, 
+  ServerApiVersion, 
+  ObjectId } = require('mongodb');
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -50,13 +52,14 @@ async function run() {
     //app.update;
 
     //app.delete;
-    app.delete('/users/:id',async(req,res)=>{
-      const id = req.params.id;
-      console.log('Delete id from database',id);
-      const query = { _id:new ObjectId(id)};
-      const result = await userCollection.deleteOne(query);
-      res.send(result);
-    })
+  app.delete('/users/:id',async(req,res)=>{
+    const id = req.params.id;
+    console.log('Please delete from db : ',id);
+    const query={_id: new ObjectId(id)};
+    const result = await userCollection.deleteOne(query);
+    res.send(result);
+    
+  })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
@@ -80,40 +83,3 @@ app.get('/',(req,res)=>{
 app.listen(port,()=>{
     console.log(`yes, my server is running on port : ${port}`);
 })
-
-//67_5 module will be start;
-
-/*
-
-import { MongoClient } from "mongodb";
-
-// Replace the uri string with your MongoDB deployment's connection string.
-const uri = "<connection string uri>";
-
-const client = new MongoClient(uri);
-
-async function run() {
-  try {
-    const database = client.db("sample_mflix");
-    const movies = database.collection("movies");
-
-    // Query for a movie that has title "Annie Hall"
-    const query = { title: "Annie Hall" };
-
-    const result = await movies.deleteOne(query);
-    if (result.deletedCount === 1) {
-      console.log("Successfully deleted one document.");
-    } else {
-      console.log("No documents matched the query. Deleted 0 documents.");
-    }
-  } finally {
-    await client.close();
-  }
-}
-run().catch(console.dir);
-
-
-
-
-
-*/
